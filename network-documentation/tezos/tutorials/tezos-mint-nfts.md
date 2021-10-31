@@ -28,7 +28,7 @@ To move to the editor, click CLOSE.
 # Token Contract and FA2 Standard
 
 The left panel is where we are going to code.  
-We are going to follow the FA2 token standard([TZIP-12](https://tezostaquito.io/docs/tzip12/)) for our NFTs.  
+We are going to follow the FA2 token standard([TZIP-12](https://tzip.tezosagora.org/proposal/tzip-12/)) for our NFTs.  
 Let’s start coding our contract.
 
 First, we will import the smartpy library
@@ -73,7 +73,7 @@ For tests, we need to create test_scenario and assign a heading to it using h1.
 
 Now we will originate our NFT contract. As we inherit the FA2 template, we need to understand what parameters we need to send and can change that according to our needs.
 We set non_fungible to true in the FA2_config, pass the admin address and set the metadata of the contract. For metadata, we will use big_map, in which first we set where to look for the metadata. Here from tezos-storage:content we can understand we need to look for content in the storage. And in storage, we will define the metadata. We will define the name and description.  
-You can refer to [TZIP-16](https://tezostaquito.io/docs/metadata-tzip16/) for more details on contract metadata.
+You can refer to [TZIP-16](https://tzip.tezosagora.org/proposal/tzip-16/) for more details on contract metadata.
 
 ```python
   nft = NFT(FA2.FA2_config(non_fungible=True), admin=admin, metadata= sp.big_map({"": sp.utils.bytes_of_string("tezos-storage:content"),"content": sp.utils.bytes_of_string("""{"name": "Tutorial Contract", "description": "NFT contract for the tutorial"}""")}))
@@ -193,7 +193,7 @@ You can view your files visiting ipfs://{hash} (If your browser doesn’t suppor
 
 For token metadata, decimals is the required field according to the FA2 standard.  
 name and symbol fields are highly recommended.
-And according to TZIP-21 for NFTs, these are some other recommended fields.
+And according to [TZIP-21](https://tzip.tezosagora.org/proposal/tzip-21/) for NFTs, these are some other recommended fields.
 
 - artifactUri
 - displayUri
@@ -223,7 +223,7 @@ We will be storing the metadata in JSON file. Create `metadata.json` and open it
 
 Here, we will be using the same IPFS URL for artifactUri, displayUri and thumbnailUri.  
 For NFTs, decimals must be 0, creators is an array of string and isBooleanAmount is boolean, and it describes whether an account can have an amount of exactly 0 or 1.  
-There are other fields also which can be used. You can read the details of all this in the TZIP-21.
+There are other fields also which can be used. You can read the details of all this in the [TZIP-21](https://tzip.tezosagora.org/proposal/tzip-21/).
 
 Now we will upload this JSON file to IPFS using nft.storage.
 
@@ -296,9 +296,9 @@ And there are three pages.
 - Home (All the NFTs will be visible here)
 - Mint (Form to mint the NFTs)
 
-  Open `src/config/config.js`. This is where we store our configurations.
+Open `src/config/config.js`. This is where we store our configurations.
 
-  ```js
+```js
 export const NAME = 'Tutorial'; // the name of the app
 export const CONTRACT_ADDRESS = 'KT1J4Qk8pfTeMEmN9WW9x12smt3ce5yXE4yZ';
 export const RPC_URL = 'https://granadanet.smartpy.io'; // network rpc url
@@ -415,7 +415,8 @@ export {connectWallet, disconnectWallet, getPKH, getContract, mintNFT, getNFTs};
 This was our `src/utils/wallet.js`.
 
 We will also be needing one more util, uploadFileToIPFS.  
-For that, you need to get the API Keys from nft.storage. Login and get one.
+For that, you need to get the API Keys from nft.storage. Login and get one.   
+Open `src/utils/upload.js`.
 
 ```js
 import {NFTStorage, File} from 'nft.storage';
@@ -462,7 +463,7 @@ dispatch(setStorage(nfts));
 
 This will get all the NFTs metadata URLs and store them in the redux storage.
 
-Now lets code our `src/components/Home.jsx` (remove the already present code).  
+Now lets code our `src/components/home/Home.jsx` (remove the already present code).  
 Here we will show all our NFTS.  
 We have a card for each NFT that will show the image, name and description.
 
@@ -533,7 +534,7 @@ const Home = () => {
 export default Home;
 ```
 
-Time for `src/components/Mint.jsx` (remove the already present code).
+Time for `src/components/mint/Mint.jsx` (remove the already present code).
 Let’s import everything first.
 
 ```jsx
@@ -555,7 +556,7 @@ const Mint = () => {
     const [message, setMessage] = useState('');
 ```
 
-In our submit function, we take all the details and upload to IPFS using the uploadToIPFS util we coded above. And then use this URL to mint using the mintNFT util from `utils/wallet.js`.
+In our submit function, we take all the details and upload to IPFS using the uploadToIPFS util we coded above. And then use this URL to mint using the mintNFT util from `src/utils/wallet.js`.
 And once minted, we add the NFT to redux storage.
 
 ```jsx
@@ -686,8 +687,8 @@ And most importantly, we learned how to mint NFTs on Tezos.
 
 # Next Steps
 
-Try out all the other entry points of FA2. You can modify the smart code and using transfer entrypoint can make a marketplace for NFTs.
+Try out all the other entry points of FA2. You can modify the smart code and using transfer entrypoint can make a marketplace for NFTs. Can refer to this [tutorial](https://learn.figment.io/tutorials/create-an-nft-marketplace-on-tezos).
 
 # About The Author
 
-This tutorial was written by Priyanshu Dangi, who is a Tezos India 2.0 Fellow. You can reach out to me on [Github](https://github.com/PriyanshuDangi).
+This tutorial was written by Priyanshu Dangi, who is a Tezos India 2.0 Fellow. You can reach out to him on [Github](https://github.com/PriyanshuDangi).
