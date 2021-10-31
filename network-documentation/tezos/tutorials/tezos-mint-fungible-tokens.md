@@ -28,7 +28,7 @@ To move to the editor, click CLOSE.
 # Token Contract and FA2 Standard
 
 The left panel is where we are going to code.  
-We are going to follow the FA2 token standard([TZIP-12](https://tezostaquito.io/docs/tzip12/)) for our tokens.  
+We are going to follow the FA2 token standard([TZIP-12](https://tzip.tezosagora.org/proposal/tzip-12/)) for our token.  
 Let’s start coding our contract.
 
 First, we will import the smartpy library.
@@ -37,7 +37,7 @@ First, we will import the smartpy library.
 import smartpy as sp
 ```
 
-Now we will import the FA2 template. Most of the features(mint, transfer) we need have already been implemented in this template.
+Now we will import the FA2 template. Most of the features (mint, transfer) we need have already been implemented in this template.
 
 ```python
 FA2 = sp.io.import_template("FA2.py")
@@ -62,7 +62,7 @@ def test():
     admin = sp.address("tz1aV2DuPYXEK2mEVc4VBhP9o4gguFGxBky4")
 ```
 
-Change the address inside the sp.address to your address(your wallet account public key).
+Change the address inside the sp.address to your address (your wallet account public key).
 
 For tests, we need to create test_scenario and assign a heading to it using h1.
 
@@ -72,12 +72,12 @@ For tests, we need to create test_scenario and assign a heading to it using h1.
 ```
 
 Now we will originate our Tokens contract. As we inherit the FA2 template, we need to understand what parameters we need to send and can change that according to our needs.  
-To our contract we need to send config, admin and metadata.
+To our contract we need to send config, admin and metadata.   
 The FA2 template provides us with FA2_config which we will be using for the config to control the token behaviour. There are multiple options ,but the ones we need are single_asset and non_fungible. As we want our token to be fungible, we will set non_fungible to False. And for this tutorial, we want the token to be of only one type and for that we will set single_asset to True.  
-The default value of non_fungible is False in the config, so we don't need to change it, but the default value of single_asset is False ,so we will set that in the config.  
+The default value of non_fungible is False in the config, so we don't need to change it, but the default value of single_asset is False ,so we will set that to True in the config.  
 For the admin, we pass the admin address we created.  
 For metadata, we will use big_map, in which first we set where to look for the metadata. Here from tezos-storage:content we can understand we need to look for content in the storage. And in storage, we will define the metadata. We will define the name and description.  
-You can refer to [TZIP-16](https://tezostaquito.io/docs/metadata-tzip16/) for more details on contract metadata.
+You can refer to [TZIP-16](https://tzip.tezosagora.org/proposal/tzip-16/) for more details on contract metadata.
 
 ```python
     token = Token(FA2.FA2_config(single_asset=True), admin=admin, metadata= sp.big_map({"": sp.utils.bytes_of_string("tezos-storage:content"),"content": sp.utils.bytes_of_string("""{"name": "Tutorial Contract", "description": "Fungible Token contract for the tutorial"}""")}))
@@ -110,8 +110,8 @@ Here, we are minting one token on jerry and ten tokens on tom address. And remem
     token.mint(token_id=0, address=tom.address, amount=10, metadata = sp.map({"": sp.utils.bytes_of_string("ipfs://bafkreifrve4w57gccc546mnhdzxoyjfcse2pajplxsqe5u3fjnclaakloi")})).run(sender=admin)
 ```
 
-Let's test the transfer entry point also.
-For transfer, we will be using the batch*transfer helper defined in the FA2 standard. It will take the from* and txs arguments. txs is the array of transactions which contains the to\_ address, amount and token_id.  
+Let's test the transfer entry point also.   
+For transfer, we will be using the batchtransfer helper defined in the FA2 standard. It will take the from_ and txs arguments. txs is the array of transactions which contains the to\_ , amount and token_id.  
 Here, we are sending 2 token from tom to jerry.
 
 ```python
@@ -172,7 +172,7 @@ We can check it according to the tests defined. We defined the heading in h1 in 
 
 ![SmartPy](../../../.gitbook/assets/fungible_smartpy_output.png)
 
-In the end, there is contract storage also and we can check in that there's eigth tokens in tom address and three tokens in jerry address and it's correct according to our tests.
+In the end, there is contract storage also and we can check in that there are eigth tokens in tom's address and three tokens in jerry's address and it's correct according to our tests.
 
 ![SmartPy](../../../.gitbook/assets/fungible_smartpy_storage.png)
 
@@ -211,11 +211,11 @@ Hurray, we deployed our contract successfully.
 # IPFS
 
 IPFS is a distributed system for storing and accessing files, websites, applications, and data.  
-And, we will use IPFS to store the metadata of our tokens. And to upload our files to IPFS, we will use nft.storage. It provides us with a user interface and also a js library to upload files.  
+And, we will use IPFS to store the metadata of our tokens. And to upload our files to IPFS, we will use nft.storage.    
 In this tutorial, we will upload the token metadata in JSON format to IPFS.
 
 For token metadata, decimals is the required field according to the FA2 standard. name and symbol fields are highly recommended.
-There are other fields also which can be used. You can read the details of all this in the TZIP-21.  
+There are other fields also which can be used. You can read the details of all this in the [TZIP-21](https://tzip.tezosagora.org/proposal/tzip-21/).  
 We will be storing the metadata in a JSON file. Create `token.json` and open it in any editor of your choice.
 
 ```json
@@ -227,7 +227,7 @@ We will be storing the metadata in a JSON file. Create `token.json` and open it 
 }
 ```
 
-Edit the name, symbol, decimals and shouldPreferSymbol according to needs. If shouldPreferSymbol is sets to true it prefers symbol over name.
+Edit the name, symbol, decimals and shouldPreferSymbol according to the need. If shouldPreferSymbol is set to true symbol is preferred over name in indexers, wallets.
 
 So to upload files, visit [nft.storage](https://nft.storage/).
 
@@ -269,7 +269,7 @@ After few seconds, refresh and move to the operations tab, you can see the mint 
 
 ![better-call.dev](../../../.gitbook/assets/fungible_bcd_operations.png)
 
-You can look at the token metadata in the tokens section.
+You can look at the metdata of the token in the tokens section.
 
 ![better-call.dev](../../../.gitbook/assets/fungible_bcd_tokens.png)
 
@@ -437,7 +437,7 @@ import React, {useState} from 'react';
 import {mint} from '../../utils/wallet';
 ```
 
-Now we will set the state and selectors.
+Now we will set the state.
 
 ```jsx
 const Mint = () => {
@@ -445,7 +445,7 @@ const Mint = () => {
   const [message, setMessage] = useState('');
 ```
 
-In our submit function, we take the address, amount and call the mint util.
+In our submit function, we take the address, amount from the input fields and then we call the mint util.
 
 ```jsx
 const submit = async (event) => {
@@ -521,7 +521,7 @@ export default Mint;
 ```
 
 Time for `src/components/transfer/Transfer.jsx` (remove the already present code). It will be mostly the same as Mint page with just slight changes.  
-Let's import React, useState and our mint util first.
+Let's import React, useState and our transfer util first.
 
 ```jsx
 import React, {useState} from 'react';
@@ -529,7 +529,7 @@ import React, {useState} from 'react';
 import {transfer} from '../../utils/wallet';
 ```
 
-Now we will set the state and selectors.
+Now we will set the state.
 
 ```jsx
 const Transfer = () => {
@@ -537,7 +537,7 @@ const Transfer = () => {
   const [message, setMessage] = useState('');
 ```
 
-In our submit function, we take the address, amount, to and call the transer util. Here we are only trasfering to one account, but more transfers can be added by adding it in the transactions array.
+In our submit function, we take the address, amount, to from the input fields and then we call the transer util. Here we are only trasfering to one account, but more transfers can be added by adding it in the transactions array.
 
 ```jsx
 const submit = async (event) => {
@@ -642,7 +642,7 @@ Now run in terminal
 npm start
 ```
 
-Open locahost:3000 in browser and mint a token using `/` and transfer them on `/transfer`.
+Open locahost:3000 in browser and mint a token on `/` and transfer them on `/transfer`.
 
 We completed the frontend. You can checkout the complete code on [Github](https://github.com/PriyanshuDangi/Tutorial_Fungible_Tokens).
 
