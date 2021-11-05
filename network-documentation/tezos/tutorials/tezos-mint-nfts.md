@@ -89,7 +89,7 @@ Test the mint function.
 We will send three parameters to the mint entry point.
 
 - token_id  
-  the token id of the NFT usually stars with 0 and then needs to be increment by 1 for each subsequent NFT.
+  the token id of the NFT usually starts with 0 and then needs to be increment by 1 for each subsequent NFT.
 
 - address  
   the address on which we want to mint the token.
@@ -133,7 +133,7 @@ Run the code using the RUN button above the left(editor) panel or can use ctrl+e
 ![SmartPy](../../../.gitbook/assets/mint_smartpy_run.png)
 
 If there are no errors, we will get the output in the right terminal.  
-We can check it according to the tests defined. We defined the heading in h1 in tests as “tutorial tests”, so we can see that on the top. Other than that, we can look at the NFT contract and on scrolling, we can see the mint transaction as defined in the tests. So this looks perfect, and our contact is working correctly.
+We can check it according to the tests defined. We defined the heading in h1 in tests as “tutorial tests”, so we can see that on the top. Other than that, we can look at the NFT contract and on scrolling, we can see the mint transaction as defined in the tests. So this looks perfect, and our contract is working correctly.
 
 ![SmartPy](../../../.gitbook/assets/mint_smartpy_output.png)
 
